@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -8,6 +9,24 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  // text controller
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  Future signIn() async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: _emailController.text.trim(),
+      password: _passwordController.text.trim(),
+    );
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,8 +39,10 @@ class _LoginPageState extends State<LoginPage> {
           child: Center(
             child: Column(
               children: [
-                // TODO: Greetings
                 const SizedBox(height: 48),
+
+                // ignore: todo
+                // TODO: Greetings
                 const Icon(
                   Icons.android_outlined,
                   size: 75,
@@ -45,6 +66,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 32),
 
+                // ignore: todo
                 // TODO: Email
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -54,11 +76,14 @@ class _LoginPageState extends State<LoginPage> {
                       border: Border.all(color: Colors.white),
                       borderRadius: BorderRadius.circular(5),
                     ),
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 0),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 0),
+
+                      // Email textfiled
                       child: TextField(
+                        controller: _emailController,
                         enabled: true, // to trigger disabledBorder
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           filled: true,
                           fillColor: Color(0xFFF2F2F2),
                           focusedBorder: OutlineInputBorder(
@@ -104,6 +129,7 @@ class _LoginPageState extends State<LoginPage> {
 
                 const SizedBox(height: 12),
 
+                // ignore: todo
                 //TODO: Password
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -113,11 +139,15 @@ class _LoginPageState extends State<LoginPage> {
                       border: Border.all(color: Colors.white),
                       borderRadius: BorderRadius.circular(5),
                     ),
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 0),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 0),
+
+                      // Password textfield
                       child: TextField(
+                        obscureText: true,
+                        controller: _passwordController,
                         enabled: true, // to trigger disabledBorder
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           filled: true,
                           fillColor: Color(0xFFF2F2F2),
                           focusedBorder: OutlineInputBorder(
@@ -153,33 +183,34 @@ class _LoginPageState extends State<LoginPage> {
                               TextStyle(fontSize: 16, color: Color(0xFFB3B1B1)),
                           // errorText: snapshot.error,
                         ),
-                        // controller: _passwordController,
                         // onChanged: _authenticationFormBloc.onPasswordChanged,
-                        obscureText: true,
                       ),
                     ),
                   ),
                 ),
                 const SizedBox(height: 18),
 
+                // ignore: todo
                 // TODO: Sign in Button
-
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.blue[900],
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: const Center(
-                      child: Padding(
-                        padding: EdgeInsets.all(12.0),
-                        child: Text(
-                          'Sign In',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                  child: GestureDetector(
+                    onTap: signIn,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.blue[900],
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: const Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(12.0),
+                          child: Text(
+                            'Sign In',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
@@ -189,6 +220,7 @@ class _LoginPageState extends State<LoginPage> {
 
                 const SizedBox(height: 32),
 
+                // ignore: todo
                 // TODO: Register
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
