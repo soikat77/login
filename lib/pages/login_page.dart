@@ -44,8 +44,7 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 const SizedBox(height: 48),
 
-                // ignore: todo
-                // TODO: Greetings
+                /* -------------------------------- Greetings ------------------------------- */
                 const Icon(
                   Icons.android_outlined,
                   size: 75,
@@ -69,8 +68,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 32),
 
-                // ignore: todo
-                // TODO: Email
+                /* ---------------------------------- Email --------------------------------- */
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: Container(
