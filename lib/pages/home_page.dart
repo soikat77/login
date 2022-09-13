@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +12,20 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   // getting the user
   final user = FirebaseAuth.instance.currentUser!;
+
+  // documents ID
+  List<String> docID = [];
+
+  // get docID
+  Future getDocID() async {
+    await FirebaseFirestore.instance.collection('users').get().then(
+          (value) => value.docs.forEach(
+            (element) {
+              print(element.reference);
+            },
+          ),
+        );
+  }
 
   @override
   Widget build(BuildContext context) {

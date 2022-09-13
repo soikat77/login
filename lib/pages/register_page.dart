@@ -75,7 +75,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Log In'),
+        title: const Text('Sign up'),
       ),
       backgroundColor: Colors.grey[300],
       body: SafeArea(
@@ -103,8 +103,9 @@ class _RegisterPageState extends State<RegisterPage> {
                 const Center(
                   child: Text(
                     'Register bellow with your details to be one of us.',
+                    textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 24,
+                      fontSize: 18,
                       fontWeight: FontWeight.normal,
                     ),
                   ),
