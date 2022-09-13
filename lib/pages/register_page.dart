@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -11,26 +12,55 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   /* ----------------------------- text controller ---------------------------- */
-  final _nameController = TextEditingController();
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
+  final _ageController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confPasswordController = TextEditingController();
 
   @override
   void dispose() {
+    _firstNameController.dispose();
+    _lastNameController.dispose();
+    _ageController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    _confPasswordController.dispose();
     super.dispose();
   }
 
   /* ----------------------------- sign up method ----------------------------- */
   Future signUp() async {
     if (passwordMatched()) {
+      // Create User
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
       );
+      // Add user details
+      addUserDetails(
+        _firstNameController.text.trim(),
+        _lastNameController.text.trim(),
+        _emailController.text.trim(),
+        int.parse(
+          _ageController.text.trim(),
+        ),
+      );
     }
+  }
+
+  // Adding user details method
+  Future addUserDetails(
+      String firstName, String lastName, String email, int age) async {
+    await FirebaseFirestore.instance.collection('users').add(
+      {
+        'first name': firstName,
+        'last name': lastName,
+        'email': email,
+        'age': age,
+      },
+    );
   }
 
   passwordMatched() {
@@ -81,7 +111,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 const SizedBox(height: 24),
 
-                /* ---------------------------------- Name ---------------------------------- */
+                /* ----------------------------------First Name ---------------------------------- */
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: Container(
@@ -95,10 +125,130 @@ class _RegisterPageState extends State<RegisterPage> {
 
                       // Name textfiled
                       child: TextField(
-                        controller: _nameController,
+                        controller: _firstNameController,
                         enabled: true, // to trigger disabledBorder
                         decoration: const InputDecoration(
-                          hintText: "Name",
+                          hintText: "First Name",
+                          hintStyle:
+                              TextStyle(fontSize: 16, color: Color(0xFFB3B1B1)),
+                          // errorText: snapshot.error,
+                          // onChanged: _authenticationFormBloc.onPasswordChanged,
+                          // obscureText: false,
+                          filled: true,
+                          fillColor: Color(0xFFF2F2F2),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            borderSide:
+                                BorderSide(width: 2, color: Colors.blueGrey),
+                          ),
+                          disabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            borderSide:
+                                BorderSide(width: 1, color: Colors.orange),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            borderSide:
+                                BorderSide(width: 1, color: Colors.white),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            borderSide: BorderSide(width: 1),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            borderSide: BorderSide(width: 1, color: Colors.red),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            borderSide: BorderSide(
+                                width: 1, color: Colors.yellowAccent),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 12),
+
+                /* ----------------------------------Last Name ---------------------------------- */
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      border: Border.all(color: Colors.white),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 0),
+
+                      // Name textfiled
+                      child: TextField(
+                        controller: _lastNameController,
+                        enabled: true, // to trigger disabledBorder
+                        decoration: const InputDecoration(
+                          hintText: "Last Name",
+                          hintStyle:
+                              TextStyle(fontSize: 16, color: Color(0xFFB3B1B1)),
+                          // errorText: snapshot.error,
+                          // onChanged: _authenticationFormBloc.onPasswordChanged,
+                          // obscureText: false,
+                          filled: true,
+                          fillColor: Color(0xFFF2F2F2),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            borderSide:
+                                BorderSide(width: 2, color: Colors.blueGrey),
+                          ),
+                          disabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            borderSide:
+                                BorderSide(width: 1, color: Colors.orange),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            borderSide:
+                                BorderSide(width: 1, color: Colors.white),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            borderSide: BorderSide(width: 1),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            borderSide: BorderSide(width: 1, color: Colors.red),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            borderSide: BorderSide(
+                                width: 1, color: Colors.yellowAccent),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 12),
+
+                /* ----------------------------------Age ---------------------------------- */
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      border: Border.all(color: Colors.white),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 0),
+
+                      // Name textfiled
+                      child: TextField(
+                        controller: _ageController,
+                        enabled: true, // to trigger disabledBorder
+                        decoration: const InputDecoration(
+                          hintText: "Age",
                           hintStyle:
                               TextStyle(fontSize: 16, color: Color(0xFFB3B1B1)),
                           // errorText: snapshot.error,
