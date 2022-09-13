@@ -58,6 +58,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             children: [
               Text(
                 "Enter your email and we'll send a link to reset your password",
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.blue[900],
                   fontSize: 18,

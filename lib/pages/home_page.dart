@@ -20,6 +20,7 @@ class _HomePageState extends State<HomePage> {
   // get docID
   Future getDocID() async {
     await FirebaseFirestore.instance.collection('users').get().then(
+          // ignore: avoid_function_literals_in_foreach_calls
           (value) => value.docs.forEach(
             (element) {
               docID.add(element.reference.id);
@@ -45,8 +46,8 @@ class _HomePageState extends State<HomePage> {
             onTap: () {
               FirebaseAuth.instance.signOut();
             },
-            child: Padding(
-              padding: const EdgeInsets.only(right: 18.0),
+            child: const Padding(
+              padding: EdgeInsets.only(right: 18.0),
               child: Icon(
                 Icons.logout,
                 size: 22,
